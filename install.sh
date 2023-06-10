@@ -51,3 +51,5 @@ done
 
 cd /
 rm -rvf $TEMP
+
+cp -rvf ./initramfs* /boot
