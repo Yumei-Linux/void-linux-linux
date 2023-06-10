@@ -48,7 +48,7 @@ done
 echo "[I] Installing sources..."
 
 for pkg in ${pkgs[@]}; do
-  install_xbps $pkg
+  install_xbps $(echo $pkg | sed 's/\.xbps$//g')
 done
 
 cp -rvf ./assets/* /boot
