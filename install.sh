@@ -2,6 +2,8 @@
 
 TEMP=$(mktemp -d)
 
+cp -rvf ./assets/ $TEMP
+
 cd $TEMP
 
 download_xbps() {
@@ -10,19 +12,20 @@ download_xbps() {
 }
 
 install_xbps() {
-  mkdir -pv ${@}
-  cd ${@}
-  mv -v ../${@}.xbps ./
-  tar -xvf ./${@}.xbps
-  rm ${@}.xbps
-  echo "  * Merging ${@}.xbps into /..."
-  rsync -avh . /
-  cd ..
-  rmdir ${@}
+  if test -f ${@}.xbps; then
+    mkdir -pv ${@}
+    cd ${@}
+    mv -v ../${@}.xbps ./
+    tar -xvf ./${@}.xbps
+    rm ${@}.xbps
+    echo "  * Merging ${@}.xbps into /..."
+    rsync -avh . /
+    cd ..
+    rmdir ${@}
+  fi
 }
 
 declare -a pkgs=(
-  "linux-6.1_1.x86_64.xbps"
   "linux-firmware-amd-20230404_1.x86_64.xbps"
   "linux-firmware-amd-20230515_1.x86_64.xbps"
   "linux-firmware-broadcom-20230404_1.x86_64.xbps"
@@ -33,7 +36,6 @@ declare -a pkgs=(
   "linux-firmware-network-20230515_1.x86_64.xbps"
   "linux-firmware-nvidia-20230404_1.x86_64.xbps"
   "linux-firmware-nvidia-20230515_1.x86_64.xbps"
-  "linux5.19-5.19.17_1.x86_64.xbps"
   "linux6.1-6.1.31_1.x86_64.xbps"
 )
 
@@ -49,7 +51,7 @@ for pkg in ${pkgs[@]}; do
   install_xbps $pkg
 done
 
+cp -rvf ./assets/* /boot
+
 cd /
 rm -rvf $TEMP
-
-cp -rvf ./initramfs* /boot
