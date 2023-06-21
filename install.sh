@@ -36,7 +36,7 @@ declare -a pkgs=(
   "linux-firmware-network-20230515_1.x86_64.xbps"
   "linux-firmware-nvidia-20230404_1.x86_64.xbps"
   "linux-firmware-nvidia-20230515_1.x86_64.xbps"
-  "linux6.1-6.1.31_1.x86_64.xbps"
+  "linux6.3-6.3.8_1.x86_64.xbps"
 )
 
 echo "[I] Downloading sources..."
